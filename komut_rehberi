@@ -1,0 +1,274 @@
+# 🚀 ArduPlane VTOL – Beginner Friendly Command Guide
+
+Bu doküman VTOL simülasyonunda kullandığınız komutların
+ne işe yaradığını açıklar.
+
+
+---
+
+# 🧠 Önce Temel Kavramlar
+
+## 1️⃣ RC Nedir?
+
+RC = Remote Control (kumanda sinyali)
+
+Simülasyonda şu komutla verilir:
+rc <kanal> <değer>
+
+
+Kanal numaraları:
+
+| Kanal | Ne kontrol eder? |
+|--------|------------------|
+| 1 | Roll (sağa/sola yatma) |
+| 2 | Pitch (burun yukarı/aşağı) |
+| 3 | Throttle (gaz) |
+| 4 | Yaw (kendi etrafında dönme) |
+
+---
+
+## 2️⃣ Roll Nedir?
+
+Uçağın kanatlarını yana yatırmasıdır.
+
+Sağa roll → sağa dönüş başlar  
+Sola roll → sola dönüş başlar
+
+---
+
+## 3️⃣ Pitch Nedir?
+
+Uçağın burnunun yukarı veya aşağı hareketidir.
+
+Pitch up → yükselmeye başlar  
+Pitch down → alçalmaya başlar
+
+---
+
+## 4️⃣ Yaw Nedir?
+
+Uçağın kendi etrafında sağa/sola dönmesidir.
+
+Multicopterde çok etkilidir.  
+Sabit kanatta daha az etkilidir.
+
+---
+
+## 5️⃣ Throttle (Gaz) Nedir?
+
+En kritik fark burada.
+
+🔵 Q modda:
+Throttle = Yükseklik
+
+🔴 Plane modda:
+Throttle = Hız
+
+---
+
+## 6️⃣ Mission Nedir?
+
+Mission = Önceden belirlenmiş rota.
+
+Waypoint = Rota üzerindeki hedef noktalar.
+
+AUTO modda uçak bu noktaları otomatik takip eder.
+
+---
+
+## 7️⃣ Transition Nedir?
+
+Transition = VTOL (dikey uçuş) → Sabit kanat (ileri uçuş) geçişidir.
+
+Bu olduğunda:
+- Dikey rotorlar kapanır
+- Ön motor çalışır
+- Kanatlar lift üretmeye başlar
+
+---
+
+# ✈️ Uçuş Modları Basit Anlatım
+
+---
+
+# 🔵 Q Modları (Dikey Uçuş)
+
+## QHOVER
+
+Helikopter gibi dikey uçuş.
+
+Gaz verirsen yükselir.
+
+---
+
+## QLOITER
+
+Dikey hover + GPS sabitleme.
+
+Stick bırakınca sabit durur.
+
+---
+
+## QLAND
+
+Bulunduğun yerde dikey iner.
+
+---
+
+## QRTL
+
+Eve (home) gider ve dikey iner.
+
+---
+
+# 🔴 Sabit Kanat Modları
+
+## FBWA
+
+Gerçek uçak gibi uçar.
+
+Gaz → hız  
+Pitch → yükselme  
+Roll → dönüş  
+
+---
+
+## AUTO
+
+Mission’u otomatik yapar.
+
+Sen müdahale etmezsin.
+
+---
+
+## GUIDED
+
+Anlık koordinat verirsin.
+
+Oraya gider.
+
+---
+
+# 🎮 Komutlar Ne Yapar?
+
+---
+
+## arm throttle
+
+Motorları çalıştırır.
+
+---
+
+## disarm
+
+Motorları kapatır.
+
+---
+
+## rc 3 1700
+
+Q modda:
+→ yükselir
+
+Plane modda:
+→ hızlanır
+
+---
+
+## rc 1 1600
+
+→ sağa yatmaya başlar
+
+---
+
+## rc 2 1600
+
+→ burun yukarı
+
+---
+
+## mode QLOITER
+
+Dikey sabit hover başlatır.
+
+---
+
+## mode FBWA
+
+Sabit kanat moduna geçer (transition olabilir).
+
+---
+
+## wp add
+
+Mission’a waypoint ekler.
+
+---
+
+## mode AUTO
+
+Mission başlatır.
+
+---
+
+## guided <lat> <lon> <alt>
+
+Verilen koordinata gider.
+
+---
+
+## 🛩 Örnek Uçuş – Sıfırdan
+
+mode QLOITER
+arm throttle
+rc 3 1700
+
+Araç yükselir.
+
+---
+
+### 2️⃣ Sabit kanat geçişi
+
+mode FBWA
+
+
+Araç ileri uçmaya başlar.
+
+---
+
+### 3️⃣ Hız artırma
+
+
+rc 3 1600
+
+---
+
+### 4️⃣ Eve dön
+
+
+mode QRTL
+
+
+
+---
+
+# ⚠️ En Önemli Kural
+
+Q modda:
+
+
+Throttle = Yükseklik
+
+
+Plane modda:
+
+Throttle = Hız
+
+
+Bu fark bilinmezse uçak kaçar.
+
+---
+
+
+
+
