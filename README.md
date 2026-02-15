@@ -1,116 +1,102 @@
-
-# 🚀 VTOL İHA SİMÜLASYON LABORATUVARI
-### ArduPilot + Gazebo Tabanlı Hibrit Uçuş Kontrol ve Görev Sistemleri Araştırma Ortamı
-
----
+# 🛰 VTOL İHA HİBRİT UÇUŞ SİSTEMİ LABORATUVARI
+### ArduPilot + Gazebo Tabanlı Uçuş Kontrol, Görev Yönetimi ve Fizik Modelleme Ortamı
 
 <p align="center">
-<b>Bu bir drone simülasyonu değildir.</b><br>
-Bu, hibrit bir uçuş kontrol sisteminin mühendislik seviyesinde analiz edildiği deneysel bir laboratuvardır.
+
+![ArduPilot](https://img.shields.io/badge/ArduPilot-SITL-blue)
+![Gazebo](https://img.shields.io/badge/Gazebo-Classic-orange)
+![UAV](https://img.shields.io/badge/System-VTOL-red)
+![Status](https://img.shields.io/badge/Simulation-Active-success)
+![Research](https://img.shields.io/badge/Focus-FlightControl-purple)
+
 </p>
 
 ---
 
-# 🧠 PROJE NEDİR?
+## 🚀 PROJE TANIMI
 
-Bu repository, VTOL (Vertical Take-Off and Landing) yapısına sahip hibrit bir İHA'nın:
+Bu repository, hibrit VTOL (Vertical Take-Off and Landing) bir İHA'nın:
 
-- Dikey uçuş fiziğini
-- Sabit kanat aerodinamiğini
-- Geçiş (transition) dinamiklerini
-- Otonom görev algoritmalarını
-- Failsafe zincirlerini
-- Parametre temelli kontrol davranışlarını
+- Dikey uçuş kontrolünü  
+- Sabit kanat aerodinamik davranışını  
+- Transition (geçiş) dinamiklerini  
+- Otonom görev sistemini  
+- Failsafe zincirini  
+- Parametre tabanlı kontrol karakteristiğini  
 
-simülasyon ortamında sistematik olarak test etmek ve anlamak amacıyla oluşturulmuştur.
+simülasyon ortamında mühendislik seviyesinde analiz etmek için oluşturulmuştur.
 
-Bu proje bir “uçuş denemesi” değil,  
-bir **uçuş kontrol sistemi çözümlemesidir.**
+Bu bir "uçuş denemesi" değil,  
+**hibrit uçuş mimarisinin çözümlemesidir.**
 
 ---
 
-# 🛩 HİBRİT MİMARİ
+# 🧠 SİSTEM MİMARİSİ
 
-Bir VTOL aracı aslında iki ayrı uçaktır:
-
-            ┌────────────────────────┐
-            │   Flight Controller    │
-            └───────────┬────────────┘
-                        │
-    ┌───────────────────┴───────────────────┐
-    │                                       │
-
+                 ┌───────────────────────┐
+                 │   Flight Controller   │
+                 │   (ArduPilot SITL)    │
+                 └───────────┬───────────┘
+                             │
+     ┌───────────────────────┼────────────────────────┐
+     │                       │                        │
+     Sensör Füzyonu Uçuş Kontrolü Görev Yönetimi
+(EKF) (PID + Stabilizasyon) (Mission Logic)
+│ │ │
+└───────────────┬───────┴───────────────┬────────┘
+│ │
 🔵 Multicopter Katmanı 🔴 Sabit Kanat Katmanı
 (Q Modları) (Plane Modları)
 
-    
 
-Mod değişimi sadece yazılımsal değildir.  
-**Fizik modeli değişir.**
-
-- Lift üretim mekanizması değişir
-- Motor dağılımı değişir
-- Kontrol algoritması değişir
-- Enerji tüketim modeli değişir
+Mod değişimi yalnızca yazılım katmanı değil,  
+**fizik modeli değişimidir.**
 
 ---
 
-# 🔬 BU LABORATUVARDA NELER TEST EDİLİYOR?
+# 🔄 HİBRİT UÇUŞ DİNAMİĞİ
 
-## 🔵 Dikey Uçuş (Q Modları)
+## 🔵 Multicopter Fazı
 
-- Hover stabilitesi
-- Rüzgar altında pozisyon tutma
-- Dikey iniş algoritması
-- QRTL dönüş mantığı
-- Batarya temelli zorunlu iniş
+- Lift = Rotor itki
+- Throttle = Yükseklik
+- Hover mümkün
+- Enerji tüketimi yüksek
 
----
+## 🔴 Sabit Kanat Fazı
 
-## 🔴 Sabit Kanat Uçuşu
+- Lift = Kanat aerodinamiği
+- Throttle = İleri hız
+- Hover mümkün değil
+- Enerji verimliliği yüksek
 
-- Hız – lift ilişkisi
-- Stall eşiği gözlemi
-- L1 navigasyon parametreleri
-- Otonom seyir davranışı
-- Glide performansı
+## 🔁 Transition
 
----
-
-## 🔄 Transition Dinamikleri
-
-- Airspeed eşik değerleri
+- Airspeed eşik kontrolü
 - Rotor kapanma zamanlaması
-- Ön motor devreye girme süresi
-- Hibrit görev akışı:
-  - VTOL kalkış
-  - Sabit kanat seyir
-  - VTOL iniş
+- Ön motor aktivasyonu
+- PID yeniden yapılandırma
 
-Transition bir mod değişimi değil,  
-bir **fizik katmanı değişimidir.**
+Transition bir mod değil,  
+**kontrol mimarisi yeniden yapılandırmasıdır.**
 
 ---
 
-# 🛰 OTONOM GÖREV SİSTEMİ
+# 🛰 GÖREV VE NAVİGASYON ANALİZİ
 
-Bu projede:
+Bu laboratuvarda test edilenler:
 
-- Waypoint tolerans analizi
-- AUTO ve GUIDED davranış karşılaştırması
-- RTL vs QRTL rota farkı
-- Home konum doğrulaması
-- GPS bağımlılığı analizi
-
-detaylı olarak incelenmektedir.
+- Waypoint kabul yarıçapı
+- AUTO vs GUIDED davranışı
+- RTL vs QRTL karşılaştırması
+- Home reset doğrulaması
+- L1 navigasyon hassasiyeti
 
 ---
 
-# ⚙ PARAMETRE TABANLI MÜHENDİSLİK
+# ⚙ PARAMETRE TABANLI DENEYLER
 
-Uçak davranışı doğrudan parametrelerle şekillenir.
-
-Bu laboratuvarda aktif olarak incelenen parametreler:
+Aktif incelenen parametreler:
 
 - `Q_LAND_FINAL_ALT`
 - `NAVL1_PERIOD`
@@ -118,51 +104,34 @@ Bu laboratuvarda aktif olarak incelenen parametreler:
 - `SIM_WIND_SPD`
 - Batarya failsafe aksiyonları
 
-Parametre değiştirmek,  
-uçağın karakterini değiştirmektir.
+Parametre değiştirmek:
+> Uçağın karakterini değiştirmektir.
 
 ---
 
-# 🌪 STRES TEST SENARYOLARI
+# 🌪 STRES TEST ORTAMI
 
-Simülasyon ortamında:
+Simülasyon koşulları:
 
 - Rüzgar enjeksiyonu
 - Düşük batarya senaryosu
-- GPS kaybı
+- GPS kaybı simülasyonu
 - Transition sırasında yük değişimi
-- Hover drift analizi
-
-gerçek sistem koşulları taklit edilmektedir.
+- Hover drift ölçümü
 
 ---
 
-# 🧠 KAZANIMLAR
+# 📊 KONTROL GÖZLEMLERİ
 
-Bu proje sayesinde:
-
-- Hibrit uçuş sistem mimarisi anlaşılmıştır
-- Uçuş modları arası fiziksel farklar gözlemlenmiştir
-- Lift üretiminin hız bağımlılığı doğrulanmıştır
-- Yanlış mod – yanlış komut kombinasyonunun etkileri analiz edilmiştir
-- Failsafe zinciri test edilmiştir
+- Q modda throttle = yükseklik
+- Plane modda throttle = hız
+- Lift üretimi hız bağımlıdır
+- Yanlış mod–komut kombinasyonu kararsızlık üretir
+- Failsafe zinciri moddan bağımsız çalışır
 
 ---
 
-# 🎯 PROJENİN AMACI
-
-Amaç bir simülasyon uçurmak değil;
-
-- Hibrit uçuş kontrol sistemini çözümlemek
-- Kontrol algoritmalarını anlamak
-- Otonom görev mantığını analiz etmek
-- Gerçek sistem geliştirme altyapısı oluşturmak
-
-Bu repository bir deney ortamıdır.
-
----
-
-# 🛠 KULLANILAN TEKNOLOJİLER
+# 🛠 TEKNOLOJİ YIĞINI
 
 - ArduPilot SITL
 - Gazebo Classic
@@ -172,27 +141,23 @@ Bu repository bir deney ortamıdır.
 
 ---
 
-# 📌 GELECEK ÇALIŞMALAR
+# 🔬 GELECEK AŞAMALAR
 
-- EKF sensör füzyon analizi
-- PID tuning derin inceleme
+- EKF sensör füzyon derin analizi
+- PID tuning optimizasyonu
 - Görüntü işleme entegrasyonu
-- ROS2 entegrasyon katmanı
+- ROS2 köprü katmanı
 - Gerçek donanım adaptasyonu
 
 ---
 
-# 👤 YAZAR
+# 👤 PROJE SAHİBİ
 
-G]lheda KIZILHAN
+Bilgisayar Mühendisliği  
 İHA Simülasyon ve Uçuş Kontrol Sistemleri Çalışmaları  
 
 ---
 
-# 🏁 SONUÇ
 
-Bu proje bir simülasyon değil,  
-bir uçuş kontrol sisteminin mühendislik seviyesinde incelenmesidir.
 
-VTOL sistemini anlamak,  
-iki ayrı uçağın fiziğini aynı gövdede çözmektir.
+
