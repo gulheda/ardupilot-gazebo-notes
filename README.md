@@ -1,91 +1,102 @@
-# 🛰 VTOL İHA SİMÜLASYON ALTYAPISI
-### Hibrit Uçuş Kontrol Sisteminin Dijital İkizi
+<p align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00ffcc,100:0066ff&height=250&section=header&text=OTONOM%20VTOL%20IHA%20SISTEMI&fontSize=40&fontColor=ffffff&animation=fadeIn"/>
+
+</p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/System-VTOL-red?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Layer-Simulation%20Core-blue?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Focus-Autonomous%20Execution-orange?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Role-Software%20&%20Simulation-success?style=for-the-badge"/>
+  <img src="https://readme-typing-svg.herokuapp.com?color=00FFCC&center=true&vCenter=true&width=700&lines=ArduPilot+%7C+Gazebo+%7C+MAVProxy;Otonom+Ucus+Altyapisi;Yapay+Zeka+Entegrasyon+Hazirligi;Simulasyon+Tabanli+Gelistirme"/>
 </p>
 
 ---
 
-## 🚀 BU REPO NEDİR?
-
-Bu repository bir drone uçurma denemesi değildir.
-
-Bu, görüntü işleme destekli otonom görev gerçekleştiren hibrit bir VTOL İHA sisteminin  
-**simülasyon altyapısıdır.**
-
-Burada:
-
-- Uçuş kontrol sistemi doğrulanır
-- Hibrit fizik modeli test edilir
-- Otonom görev zinciri simüle edilir
-- Parametre tabanlı davranış analiz edilir
-- Gerçek sistem sahaya çıkmadan önce dijital ortamda çalıştırılır
-
-Bu repo, İHA'nın uçuş yazılımının **güvenli test alanıdır.**
+<p align="center">
+  <img src="https://img.shields.io/badge/ARdupilot-SITL-00ffcc?style=for-the-badge&logo=apache&logoColor=black">
+  <img src="https://img.shields.io/badge/Gazebo-11-00ccff?style=for-the-badge&logo=linux&logoColor=black">
+  <img src="https://img.shields.io/badge/MAVProxy-Control-00ff66?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Ubuntu-20.04-ff0066?style=for-the-badge&logo=ubuntu&logoColor=white">
+</p>
 
 ---
 
-## 🧠 NEDEN VAR?
+# 🧠 PROJE NEDİR?
 
-Gerçek sahada hata yapma lüksümüz yok.
+Gerçek görev senaryolarına hazır,  
+simülasyon ortamında çalışan **otonom VTOL İHA sistemi.**
 
-Bu nedenle:
+Bu sistem:
 
-- Transition kararlılığı
-- Failsafe zinciri
-- Görev mantığı
-- Sensör davranışı
-- Çevresel etkiler
-
-önce burada sınanır.
-
-Bu sistem, VTOL İHA'nın **dijital test pistidir.**
+⚡ Otonom kalkış – iniş  
+⚡ Görev noktalarına navigasyon  
+⚡ Stabil uçuş kontrolü  
+⚡ Gerçekçi motor ve fizik simülasyonu  
+⚡ Yapay zekâ entegrasyon altyapısı  
 
 ---
 
-## 🔬 NEYİ TEMSİL EDER?
+# 🎯 GÖREV
 
-Bu repo:
+Bu İHA:
 
-- ArduPilot tabanlı uçuş kontrolünü
-- Gazebo fizik motorunu
-- Görev ve navigasyon sistemini
-- Görüntü işleme entegrasyonunu
-- Hibrit uçuş mimarisini
+✔️ Kalkış yapar  
+✔️ Görev noktasına gider  
+✔️ Stabil uçuşu korur  
+✔️ İleri görev senaryolarına hazırdır  
 
-tek bir simülasyon ortamında birleştirir.
+Gelecek Faz:
 
-Bu yalnızca bir klasör değil.
-
-Bu, sistemin yazılım katmanıdır.
-
----
-
-## 🎯 ROL
-
-Bu repository, proje kapsamında:
-
-- Simülasyon altyapısının kurulumu
-- Uçuş konfigürasyonlarının yönetimi
-- Görev senaryolarının test edilmesi
-- Parametre deneylerinin yürütülmesi
-- Sistem davranışının analiz edilmesi
-
-sorumluluğunu taşır.
+🧠 Görüntü işleme  
+📦 Ayrılabilir görev drone’u  
+📡 Drone–Drone haberleşme  
+🤖 Otonom karar sistemi  
 
 ---
 
-## 🏁 ÖZET
+# 🛠 BEN BU PROJEDE
 
-Bu repo, VTOL İHA sisteminin:
+- Uçuş kontrol sistemini kuruyorum  
+- Gazebo simülasyon mimarisini yapılandırıyorum  
+- Motor & SERVO parametrelerini optimize ediyorum  
+- MAVProxy komut akışını yönetiyorum  
+- Otonom görev altyapısını inşa ediyorum  
 
-> Uçuşunu,
-> Mantığını,
-> Kararlılığını,
-> ve Davranışını
+Bu bir drone projesi değil.  
+Bu bir **otonom sistem mimarisi geliştirme süreci.**
 
-gerçek dünyaya
+---
+
+# ⚡ SİSTEM MİMARİSİ
+
+ArduPilot (SITL)
+↓
+MAVProxy
+↓
+Gazebo 11
+↓
+Fizik + Görselleştirme
+
+
+---
+
+# 🔥 CANLI SİSTEM DURUMU
+
+🟢 Simülasyon Aktif  
+🟢 Drone Spawn Başarılı  
+🟢 Guided / Arm / Takeoff Çalışıyor  
+🟡 Otonom Görev Geliştirme Aşamasında  
+🔵 AI Entegrasyonu Planlanıyor  
+
+---
+
+<p align="center">
+  <img src="https://github-readme-progress-bar.vercel.app/api?percentage=75&color=00ffcc"/>
+</p>
+
+---
+
+<p align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0066ff,100:000000&height=150&section=footer"/>
+
+</p>
+
