@@ -1,163 +1,68 @@
-# 🛰 VTOL İHA HİBRİT UÇUŞ SİSTEMİ LABORATUVARI
-### ArduPilot + Gazebo Tabanlı Uçuş Kontrol, Görev Yönetimi ve Fizik Modelleme Ortamı
+<!-- ===================== -->
+<!--  VTOL UAV SIM LAB     -->
+<!-- ===================== -->
+
+<h1 align="center">
+🚀 VTOL İHA SİMÜLASYON SİSTEMİ
+</h1>
 
 <p align="center">
+<b>ArduPilot + Gazebo Tabanlı Hibrit Uçuş Kontrol ve Görev Altyapısı</b>
+</p>
 
-![ArduPilot](https://img.shields.io/badge/ArduPilot-SITL-blue)
-![Gazebo](https://img.shields.io/badge/Gazebo-Classic-orange)
-![UAV](https://img.shields.io/badge/System-VTOL-red)
-![Status](https://img.shields.io/badge/Simulation-Active-success)
-![Research](https://img.shields.io/badge/Focus-FlightControl-purple)
-
+<p align="center">
+<img src="https://img.shields.io/badge/System-VTOL-red?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Simulation-SITL-blue?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Physics-Hybrid-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
 </p>
 
 ---
 
-## 🚀 PROJE TANIMI
+# 🛰 BU REPO NEDİR?
 
-Bu repository, hibrit VTOL (Vertical Take-Off and Landing) bir İHA'nın:
+Bu bir demo klasörü değil.
 
-- Dikey uçuş kontrolünü  
-- Sabit kanat aerodinamik davranışını  
-- Transition (geçiş) dinamiklerini  
-- Otonom görev sistemini  
-- Failsafe zincirini  
-- Parametre tabanlı kontrol karakteristiğini  
+Bu repository, VTOL (Vertical Take-Off and Landing) hibrit bir İHA'nın:
 
-simülasyon ortamında mühendislik seviyesinde analiz etmek için oluşturulmuştur.
+- 🔵 Dikey uçuş kontrol sistemi  
+- 🔴 Sabit kanat aerodinamik modeli  
+- 🔁 Transition dinamikleri  
+- 🛰 Otonom görev altyapısı  
+- ⚙ Parametre tabanlı davranış kontrolü  
+- 🚨 Failsafe zincirleri  
+- 🌪 Çevresel stres testleri  
 
-Bu bir "uçuş denemesi" değil,  
-**hibrit uçuş mimarisinin çözümlemesidir.**
+için kurulmuş tam kapsamlı bir simülasyon laboratuvarıdır.
 
----
-
-# 🧠 SİSTEM MİMARİSİ
-
-                 ┌───────────────────────┐
-                 │   Flight Controller   │
-                 │   (ArduPilot SITL)    │
-                 └───────────┬───────────┘
-                             │
-     ┌───────────────────────┼────────────────────────┐
-     │                       │                        │
-     Sensör Füzyonu Uçuş Kontrolü Görev Yönetimi
-(EKF) (PID + Stabilizasyon) (Mission Logic)
-│ │ │
-└───────────────┬───────┴───────────────┬────────┘
-│ │
-🔵 Multicopter Katmanı 🔴 Sabit Kanat Katmanı
-(Q Modları) (Plane Modları)
-
-
-Mod değişimi yalnızca yazılım katmanı değil,  
-**fizik modeli değişimidir.**
+> Bu repoda VTOL İHA simülasyonuna dair **tüm dosyalar mevcuttur.**  
+> Uçuş kontrolünden görev sistemine kadar her şey burada yapılandırılmıştır.
 
 ---
 
-# 🔄 HİBRİT UÇUŞ DİNAMİĞİ
+# 🧠 HİBRİT UÇUŞ MİMARİSİ
 
-## 🔵 Multicopter Fazı
+                ┌────────────────────┐
+                │   Flight Control   │
+                │   (ArduPilot)      │
+                └──────────┬─────────┘
+                           │
+      ┌────────────────────┴────────────────────┐
+      │                                         │
+🔵 Multicopter Stack                      🔴 Fixed Wing Stack
+   (Q Modları)                               (Plane Modları)
 
-- Lift = Rotor itki
-- Throttle = Yükseklik
-- Hover mümkün
-- Enerji tüketimi yüksek
 
-## 🔴 Sabit Kanat Fazı
 
-- Lift = Kanat aerodinamiği
-- Throttle = İleri hız
-- Hover mümkün değil
-- Enerji verimliliği yüksek
+Transition =  
+➡ Kontrol algoritması değişir  
+➡ Lift üretim mekanizması değişir  
+➡ Motor dağılımı değişir  
+➡ Enerji modeli değişir  
 
-## 🔁 Transition
-
-- Airspeed eşik kontrolü
-- Rotor kapanma zamanlaması
-- Ön motor aktivasyonu
-- PID yeniden yapılandırma
-
-Transition bir mod değil,  
-**kontrol mimarisi yeniden yapılandırmasıdır.**
+Bu sadece mod değil, **fizik katmanı değişimidir.**
 
 ---
 
-# 🛰 GÖREV VE NAVİGASYON ANALİZİ
-
-Bu laboratuvarda test edilenler:
-
-- Waypoint kabul yarıçapı
-- AUTO vs GUIDED davranışı
-- RTL vs QRTL karşılaştırması
-- Home reset doğrulaması
-- L1 navigasyon hassasiyeti
-
----
-
-# ⚙ PARAMETRE TABANLI DENEYLER
-
-Aktif incelenen parametreler:
-
-- `Q_LAND_FINAL_ALT`
-- `NAVL1_PERIOD`
-- `ARSPD_FBW_MIN`
-- `SIM_WIND_SPD`
-- Batarya failsafe aksiyonları
-
-Parametre değiştirmek:
-> Uçağın karakterini değiştirmektir.
-
----
-
-# 🌪 STRES TEST ORTAMI
-
-Simülasyon koşulları:
-
-- Rüzgar enjeksiyonu
-- Düşük batarya senaryosu
-- GPS kaybı simülasyonu
-- Transition sırasında yük değişimi
-- Hover drift ölçümü
-
----
-
-# 📊 KONTROL GÖZLEMLERİ
-
-- Q modda throttle = yükseklik
-- Plane modda throttle = hız
-- Lift üretimi hız bağımlıdır
-- Yanlış mod–komut kombinasyonu kararsızlık üretir
-- Failsafe zinciri moddan bağımsız çalışır
-
----
-
-# 🛠 TEKNOLOJİ YIĞINI
-
-- ArduPilot SITL
-- Gazebo Classic
-- MAVProxy
-- MAVLink
-- Ubuntu 20.04
-
----
-
-# 🔬 GELECEK AŞAMALAR
-
-- EKF sensör füzyon derin analizi
-- PID tuning optimizasyonu
-- Görüntü işleme entegrasyonu
-- ROS2 köprü katmanı
-- Gerçek donanım adaptasyonu
-
----
-
-# 👤 PROJE SAHİBİ
-
-Bilgisayar Mühendisliği  
-İHA Simülasyon ve Uçuş Kontrol Sistemleri Çalışmaları  
-
----
-
-
-
+Tüm altyapı bu repoda mevcuttur.
 
