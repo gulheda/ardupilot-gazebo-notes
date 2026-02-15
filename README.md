@@ -1,68 +1,70 @@
-<!-- ===================== -->
-<!--  VTOL UAV SIM LAB     -->
-<!-- ===================== -->
-
-<h1 align="center">
-🚀 VTOL İHA SİMÜLASYON SİSTEMİ
-</h1>
+<!-- ================= HERO SECTION ================= -->
 
 <p align="center">
-<b>ArduPilot + Gazebo Tabanlı Hibrit Uçuş Kontrol ve Görev Altyapısı</b>
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=28&duration=3000&pause=800&color=00F7FF&center=true&vCenter=true&width=900&lines=VTOL+%C4%B0HA+S%C4%B0M%C3%9CLASYON+ALTYAPISI;HIBRIT+U%C3%87U%C5%9E+KONTROL+SISTEMI;OTONOM+GOREV+GERCEKLESTIRME;DIJITAL+IKIZ+ORTAMI" />
+
 </p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/System-VTOL-red?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Simulation-SITL-blue?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Physics-Hybrid-orange?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ARDUPILOT-SITL-blue?style=for-the-badge&logo=linux"/>
+<img src="https://img.shields.io/badge/GAZEBO-PHYSICS-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/VTOL-HYBRID-red?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/AUTONOMOUS-MISSION-success?style=for-the-badge"/>
 </p>
 
 ---
 
-# 🛰 BU REPO NEDİR?
-
-Bu bir demo klasörü değil.
-
-Bu repository, VTOL (Vertical Take-Off and Landing) hibrit bir İHA'nın:
-
-- 🔵 Dikey uçuş kontrol sistemi  
-- 🔴 Sabit kanat aerodinamik modeli  
-- 🔁 Transition dinamikleri  
-- 🛰 Otonom görev altyapısı  
-- ⚙ Parametre tabanlı davranış kontrolü  
-- 🚨 Failsafe zincirleri  
-- 🌪 Çevresel stres testleri  
-
-için kurulmuş tam kapsamlı bir simülasyon laboratuvarıdır.
-
-> Bu repoda VTOL İHA simülasyonuna dair **tüm dosyalar mevcuttur.**  
-> Uçuş kontrolünden görev sistemine kadar her şey burada yapılandırılmıştır.
+<p align="center">
+<img src="docs/vtol_banner.gif" width="900"/>
+</p>
 
 ---
 
-# 🧠 HİBRİT UÇUŞ MİMARİSİ
-
-                ┌────────────────────┐
-                │   Flight Control   │
-                │   (ArduPilot)      │
-                └──────────┬─────────┘
-                           │
-      ┌────────────────────┴────────────────────┐
-      │                                         │
-🔵 Multicopter Stack                      🔴 Fixed Wing Stack
-   (Q Modları)                               (Plane Modları)
-
-
-
-Transition =  
-➡ Kontrol algoritması değişir  
-➡ Lift üretim mekanizması değişir  
-➡ Motor dağılımı değişir  
-➡ Enerji modeli değişir  
-
-Bu sadece mod değil, **fizik katmanı değişimidir.**
+<h2 align="center">🛰 Bu Bir Drone Simülasyonu Değil.</h2>
+<h3 align="center">Bu, Hibrit Bir Uçuş Sisteminin Dijital İkizidir.</h3>
 
 ---
 
-Tüm altyapı bu repoda mevcuttur.
+██╗██╗ ██╗ █████╗ ██████╗ ██████╗ ██╗
+██╔════╝██║ ██║██╔══██╗██╔══██╗██╔════╝ ██║
+█████╗ ███████║███████║██████╔╝██║ ███╗██║
+██╔══╝ ██╔══██║██╔══██║██╔═══╝ ██║ ██║██║
+██║ ██║ ██║██║ ██║██║ ╚██████╔╝██║
+╚═╝ ╚═╝ ╚═╝╚═╝ ╚═╝╚═╝ ╚═════╝ ╚═╝
+
+
+---
+
+## ⚡ NEDİR BU?
+
+Gerçek sahaya çıkmadan önce:
+
+• 🧠 Görüntü işleme → karar mekanizması  
+• 🔁 Hibrit uçuş transition  
+• 🛰 Otonom görev zinciri  
+• ⚙ Parametre tabanlı sistem davranışı  
+• 🌪 Çevresel stres senaryoları  
+
+burada test edilir.
+
+---
+
+## 💣 BU REPO NEYİ BARINDIRIR?
+
+✓ Uçuş kontrol konfigürasyonları
+✓ Gazebo fizik ortamları
+✓ VTOL model dosyaları
+✓ Mission senaryoları
+✓ Parametre testleri
+✓ Log analizleri
+✓ Otonom görev simülasyonları
+
+> İHA simülasyonuna dair tüm altyapı bu repoda mevcuttur.
+
+---
+
+<p align="center">
+🔥 Software & Simulation Responsible 🔥
+</p>
 
