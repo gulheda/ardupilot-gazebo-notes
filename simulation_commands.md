@@ -1,141 +1,366 @@
-# simülasyonu başlatırken 
+# ✈️ ArduPlane VTOL – Complete Flight Mode Reference
 
-sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON --map --console
+Bu doküman ArduPlane VTOL firmware içindeki tüm uçuş modlarını:
 
-# gazeboyu başlatırken 
+- Fizik modeli
+- Kontrol mantığı
+- Gaz davranışı
+- GPS kullanımı
+- Otonomi seviyesi
+- Operasyonel kullanım
 
-gz sim -v4 -r iris_runway.sdf
+açısından detaylı şekilde açıklar.
 
-#
-arm throttle ->	Motorları çalıştırır (uçuşa hazır).
+---
 
-disarm ->	Motorları durdurur (güvenli moda geçer).
+# 🧠 VTOL Nedir?
 
-mode GUIDED ->	GPS destekli, komut kontrollü uçuş sağlar.
+VTOL (Vertical Take-Off and Landing) iki farklı uçuş sistemini birleştirir:
 
-mode STABILIZE	-> Manuel uçuş modu (denge sağlar).
+1. 🔵 Multicopter (Rotor tabanlı dikey uçuş)
+2. 🔴 Fixed Wing (Kanat tabanlı aerodinamik uçuş)
 
-mode RTL ->	Kalkış yapılan noktaya otomatik geri dönüş.
+Mod değiştirildiğinde sadece kontrol değil, **fizik modeli değişir.**
 
-mode LOITER	-> Olduğu yerde sabit kalır (hover).
+---
 
-mode AUTO	-> Görevleri (waypoint) otomatik takip eder.
+# 🔵 BÖLÜM 1 – VTOL (Q) MODLARI
 
-mode LAND -> Bulunduğu yere yumuşak iniş yapar.
+Bu modlarda araç dikey rotorlarla uçar.
 
-# MANUEL RC KONTROL KOMUTLARI
+---
 
-rc 1 1500 -> # Roll: sola-sağa yatış
+## QSTABILIZE
 
-rc 2 1500 -> # Pitch: ileri-geri
+**Fizik:** Multicopter  
+**Gaz:** Yükseklik kontrol eder  
+**GPS:** Kullanılmaz  
+**Otonomi:** Manuel stabilize  
 
-rc 3 1500 -> # Throttle: irtifa/yükseklik
+Roll ve pitch stabilize edilir.  
+Pozisyon tutulmaz.
 
-rc 4 1500 -> # Yaw: yön değiştirme
+> Kontrollü manuel hover.
 
-# Değer aralığı genelde 1000–2000 arasındadır. 1500 nötr/denge konumudur.
+---
 
-# POZİSYON/KONUM KONTROLÜ (GPS)
+## QHOVER
 
-tion <lat> <lon> <alt> ->	Drone’u belirli bir GPS noktasına yönlendirir.
+**Fizik:** Multicopter  
+**Gaz:** Yükseklik  
+**GPS:** Zayıf/opsiyonel  
+**Otonomi:** Manuel  
 
-guided> goto <lat> <lon> <alt> ->	(Bazı MAVProxy sürümlerinde çalışır)
+Pilot gaz verir, araç dikey hareket eder.  
+Drift olabilir.
 
-rtl	-> Dönüş ve iniş (Return to Launch).
+> Manuel dikey uçuş.
 
-wp list ->	Kayıtlı görev noktalarını listeler.
+---
 
-wp load -> <dosya>	Görev noktası dosyası yükler.
+## QLOITER
 
-wp set -> <index> <lat> <lon> <alt>	Görev noktasını el ile ayarlar.
+**Fizik:** Multicopter  
+**Gaz:** Yükseklik  
+**GPS:** Aktif  
+**Otonomi:** Yarı otonom  
 
-wp save	-> Mevcut görev noktalarını dosyaya yazar.
+Pozisyon sabit tutulur.  
+Stick bırakıldığında konum korunur.
 
-wp clear-> Tüm görev noktalarını temizler.
+> Sabit hover.
 
-# GÖREV VE YÖNLENDİRME KOMUTLARI
+---
 
-# Komut   	Açıklama
+## QLAND
 
-mission list ->	Yüklenmiş görevleri listeler.
+**Fizik:** Multicopter  
+**Gaz:** Autopilot yönetir  
+**GPS:** Opsiyonel  
+**Otonomi:** Tam  
 
-mission reset	-> Görevi başa sarar.
+Bulunduğu yerde dikey iner.
 
-mission start	-> Görevleri başlatır.
+> Otonom dikey iniş.
 
-mission pause	-> Görevi geçici olarak duraklatır.
+---
 
-mission resume	-> Görevi kaldığı yerden sürdürür.
+## QRTL
 
-# SİMÜLASYON VE ARAÇ TESTİ
+**Fizik:** Multicopter  
+**Gaz:** Autopilot  
+**GPS:** Aktif  
+**Otonomi:** Tam  
 
-status	-> Drone’un durum bilgilerini listeler.
+Home’a gider → Hover → İner.
 
-param show <parametre> ->	Parametre değeri gösterir.
+> VTOL eve dönüş.
 
-param set <parametre> <değer> ->	Yeni parametre değeri atar.
+---
 
-watchdog reboot    ->    	Drone yazılımını yeniden başlatır (SITL için).
+## QACRO
 
-battery 100	-> Simülasyonda batarya doluluğunu ayarlar.
+**Fizik:** Multicopter  
+**Gaz:** Manuel  
+**GPS:** Yok  
+**Otonomi:** Yok  
 
-speed <m/s> ->	Drone hızını sınırlar.
+Açısal hız kontrolü. Stabil değil.
 
-# MAVProxy Yardımcıları
+> Dikey akro modu.
 
-help	               ->  Kullanılabilir komutları listeler.
+---
 
-module list	         -> Yüklü modülleri listeler.
+## QAUTOTUNE
 
-module load <isim>	 -> Modül yükler. Örnek: module load geofence
+**Fizik:** Multicopter  
+**Gaz:** Otomatik  
+**GPS:** Gerekmez  
+**Otonomi:** PID tuning  
 
-module unload <isim> -> Modül kaldırır.
+Q mod PID parametrelerini ayarlar.
 
-# Drone haritada gözükmüyorsa:
+---
 
-map penceresinde sağ tıklayıp “Follow” ya da “Track Vehicle” varsa seç.
+## LOITERALTQLAND
 
-vehicle 1 komutu ile aktif aracı değiştirmeyi dene.
+**Fizik:** Multicopter  
+**Gaz:** Otomatik  
+**GPS:** Aktif  
+**Otonomi:** Hibrit  
 
+LOITER yapar → Sonra QLAND.
 
- # Drone’un maksimum yatay (ileri/geri/sağ/sol) hızını belirlemek için:
+---
 
-param set WPNAV_SPEED 500
+# 🔴 BÖLÜM 2 – SABİT KANAT (PLANE) MODLARI
 
-WPNAV_SPEED	Waypoint  -> navigasyon hızı (cm/s cinsindedir).
+Bu modlarda uçuş kanat kaldırma kuvvetiyle gerçekleşir.
 
-500 → 5 m/s	Hızı 5 m/s olarak ayarlamış oluruz.
+---
 
-# Parametre	Açıklama
+## MANUAL
 
-RTL_ALT	RTL ->  sırasında ne kadar yükseklikten dönsün (cm)
+**Fizik:** Sabit kanat  
+**Gaz:** İleri hız  
+**GPS:** Yok  
+**Otonomi:** Yok  
 
-RTL_SPEED	-> Dönüş sırasında hızı (cm/s)
+Servo girişleri direkt uygulanır.
 
-LAND_SPEED ->	İniş hızı (cm/s)
+> Ham uçuş.
 
-param set RTL_ALT 1000      -> 10 metre irtifadan geri dön
+---
 
-param set RTL_SPEED 400     -> 4 m/s dönüş hızı
+## STABILIZE
 
-param set LAND_SPEED 50     ->  0.5 m/s iniş hızı
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Yok  
+**Otonomi:** Yarı  
 
+Attitude stabilize edilir.
 
-param set WPNAV_SPEED 500	-> Navigasyon hızı (5 m/s).
+---
 
-param set WPNAV_ACCEL 250 -> 	İvme ayarı.
+## TRAINING
 
-param set RTL_SPEED 300 -> 	Geri dönüş hızı.
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Yok  
+**Otonomi:** Limitli  
 
-# simülasyon durdumak için
+Yatış açısı sınırlandırılır.
 
-CTRL + C
+---
 
-pkill gzserver
+## ACRO
 
-pkill gzclient
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Yok  
+**Otonomi:** Yok  
 
-status                # Uçuş durumu
+Açısal hız kontrolü.
 
+---
 
-arm status            # Arming durumu
+## FBWA (Fly By Wire A)
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Opsiyonel  
+**Otonomi:** Güvenlik destekli  
+
+Pilot açı verir.  
+Autopilot aşırı yatışı ve stall’ı engeller.
+
+---
+
+## FBWB
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Aktif  
+**Otonomi:** Yarı  
+
+Pitch = Yükseklik  
+Throttle = Hız  
+
+---
+
+## CRUISE
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Aktif  
+**Otonomi:** Yarı  
+
+Yükseklik ve yön tutulur.
+
+---
+
+## CIRCLE
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Gerekmez  
+**Otonomi:** Yarı  
+
+Sabit yarıçapta daire.
+
+---
+
+## LOITER
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Aktif  
+**Otonomi:** Tam  
+
+GPS noktasında daire çizer.
+
+---
+
+## RTL
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Aktif  
+**Otonomi:** Tam  
+
+Home’a sabit kanat uçuşla döner.
+
+---
+
+## AUTO
+
+**Fizik:** Hibrit  
+**Gaz:** Otomatik  
+**GPS:** Aktif  
+**Otonomi:** Tam  
+
+Mission waypoint’lerini yürütür.  
+Gerekirse Q ↔ Plane transition yapar.
+
+---
+
+## GUIDED
+
+**Fizik:** Sabit kanat  
+**Gaz:** Otomatik  
+**GPS:** Aktif  
+**Otonomi:** Tam  
+
+Anlık verilen koordinata gider.
+
+---
+
+## AUTOTUNE
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Opsiyonel  
+**Otonomi:** PID tuning  
+
+---
+
+## TAKEOFF
+
+**Fizik:** Sabit kanat  
+**Gaz:** Otomatik  
+**GPS:** Opsiyonel  
+**Otonomi:** AUTO içinde  
+
+Pist kalkışı yapar.
+
+---
+
+## THERMAL
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Aktif  
+**Otonomi:** Tam  
+
+Termal hava akımı arar.
+
+---
+
+## AUTOLAND
+
+**Fizik:** Sabit kanat  
+**Gaz:** Otomatik  
+**GPS:** Aktif  
+**Otonomi:** Tam  
+
+Glide slope ile pist inişi yapar.
+
+---
+
+## AVOID_ADSB
+
+**Fizik:** Sabit kanat  
+**Gaz:** Hız  
+**GPS:** Aktif  
+**Otonomi:** Tam  
+
+Hava trafik çarpışma önleme.
+
+---
+
+## INITIALISING
+
+Sistem açılış durumu.  
+Uçuş yapılamaz.
+
+---
+
+# 🎯 Kritik Kavrayış
+
+| Özellik | Q Modlar | Plane Modlar |
+|----------|-----------|--------------|
+| Lift Kaynağı | Rotor itki | Kanat aerodinamiği |
+| Throttle | Yükseklik | Hız |
+| Dikey Kalkış | ✅ | ❌ |
+| Uzun Menzil Verimlilik | ❌ | ✅ |
+| Hover | ✅ | ❌ |
+
+---
+
+# 🏁 Sonuç
+
+VTOL sistemi iki ayrı uçuş mimarisini tek firmware içinde birleştirir.
+
+Mod değişimi:
+
+- Fizik modeli
+- Motor dağılımı
+- Stabilizasyon algoritması
+- Enerji tüketimi
+- Kontrol yaklaşımı
+
+değiştirir.
+
+Mod seçimi, uçuş fiziği seçimidir.
+
